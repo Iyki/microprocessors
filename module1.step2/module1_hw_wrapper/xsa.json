@@ -1,0 +1,97 @@
+{
+    "versionMajor": "0",
+    "versionMinor": "0",
+    "usesPR": "false",
+    "platformState": "pre_synth",
+    "topModuleName": "module1_hw_wrapper",
+    "acceleratorBinaryFormat": "xclbin2",
+    "acceleratorBinaryContent": "bitstream",
+    "validAcceleratorBinaryContentValues": "dcp,bitstream",
+    "dcpFunctionStripped": "false",
+    "dcpEncrypted": "false",
+    "defaultOutputType": "hw_export",
+    "designIntent": {
+        "dataCenter": {
+            "value": "false",
+            "explicit": "false"
+        },
+        "embedded": {
+            "value": "false",
+            "explicit": "false"
+        },
+        "externalHost": {
+            "value": "false",
+            "explicit": "false"
+        },
+        "serverManaged": {
+            "value": "false",
+            "explicit": "false"
+        }
+    },
+    "board": {
+        "name": "digilentinc.com:zybo-z7-10:1.0",
+        "vendor": "digilentinc.com",
+        "part": "xc7z010clg400-1",
+        "boardPart": "digilentinc.com:zybo-z7-10:part0:1.0"
+    },
+    "devices": [
+        {
+            "name": "fpga0",
+            "type": "8",
+            "fpgaPart": "zynq:xc7z010:clg400:-1",
+            "part": {
+                "name": "xc7z010clg400-1",
+                "architecture": "zynq",
+                "device": "xc7z010",
+                "package": "clg400",
+                "speedGrade": "-1"
+            },
+            "core": {
+                "name": "OCL_REGION_0",
+                "type": "clc_region",
+                "numComputeUnits": "60",
+                "availableResources": {
+                    "bramCount": "60",
+                    "dspCount": "80",
+                    "lutCount": "17174",
+                    "registerCount": "34649"
+                }
+            }
+        }
+    ],
+    "files": [
+        {
+            "name": "module1_hw_wrapper.bit",
+            "type": "FULL_BIT"
+        }
+    ],
+    "vendor": "xilinx",
+    "boardId": "zybo-z7-10",
+    "description": "Vivado generated Hardware Platform",
+    "uniqueName": "xilinx:zybo-z7-10::0.0",
+    "fpgaPart": "zynq",
+    "fpgaDevice": "xc7z010",
+    "unifiedPlatform": "true",
+    "expandablePlatform": "false",
+    "hardware": "true",
+    "softwareEmulation": "true",
+    "hardwareEmulation": "false",
+    "hardwareEmuPlatform": "false",
+    "usesNIFD": "false",
+    "generatedName": "Vivado",
+    "generatedVersion": "2021.2",
+    "generatedChangeList": "3367213",
+    "generatedIpChangeList": "3369179",
+    "generatedTimestamp": "Mon Jan  9 06:18:46 2023",
+    "idCode": "03722093",
+    "designIDs": {
+        "designID": "187366153"
+    },
+    "resources": [
+        {
+            "type": "REG",
+            "count": "34649"
+        }
+    ]
+}
+

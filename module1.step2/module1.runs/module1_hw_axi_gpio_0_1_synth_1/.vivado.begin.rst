@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<ProcessHandle Version="1" Minor="0">
+    <Process Command="vivado" Owner="f0041yr" Host="plank.thayer.dartmouth.edu" Pid="1058710" HostCore="40" HostMemory="32815768">
+    </Process>
+</ProcessHandle>

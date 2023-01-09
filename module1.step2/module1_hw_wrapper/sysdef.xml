@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Project Version="1" Minor="7" DIGEST="">
+	<TOOL_VERSION Version="2021.2"/>
+	<MODE Name="Post-Synthesis"/>
+	<SYSTEMINFO BOARD="digilentinc.com:zybo-z7-10:1.0" PART="xc7z010clg400-1" ARCH="zynq" PACKAGE="clg400" DEVICE="7z010" SPEED="-1" LUT="17600" FF="35200" BRAM="60" DSP="80"/>
+	<HIERARCHY Name="module1_hw_wrapper"/>
+	<File Type="HW_HANDOFF" Name="module1_hw.hwh" src_db="module1_hw.hwdef" DESIGN_HIERARCHY="module1_hw_i" BD_TYPE="DEFAULT_BD">
+	</File>
+	<File Type="BDA" Name="module1_hw.bda" src_db="module1_hw.hwdef">
+	</File>
+	<File Type="PS_FSBL_INIT" Name="ps7_init.c" src_db="module1_hw_processing_system7_0_1.hwdef">
+	</File>
+	<File Type="PS_FSBL_INIT" Name="ps7_init.h" src_db="module1_hw_processing_system7_0_1.hwdef">
+	</File>
+	<File Type="PS_FSBL_INIT_GPL" Name="ps7_init_gpl.c" src_db="module1_hw_processing_system7_0_1.hwdef">
+	</File>
+	<File Type="PS_FSBL_INIT_GPL" Name="ps7_init_gpl.h" src_db="module1_hw_processing_system7_0_1.hwdef">
+	</File>
+	<File Type="PS_INIT_HELP" Name="ps7_init.html" src_db="module1_hw_processing_system7_0_1.hwdef">
+	</File>
+	<File Type="PS_XMD_INIT" Name="ps7_init.tcl" src_db="module1_hw_processing_system7_0_1.hwdef">
+	</File>
+	<File Type="BIT" Name="module1_hw_wrapper.bit" src_db="temp.hdf">
+	</File>
+	<USEDRESOURCES LUT="426" FF="551" BRAM="0" DSP="0"/>
+</Project>
+
