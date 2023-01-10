@@ -28,9 +28,6 @@ void led_init(void)
 
     ///* set tristate buffer to output */
     XGpio_SetDataDirection(&port, CHANNEL1, OUTPUT);
-
-    // todo: crosscheck
-    return;
 }
 
 /*
@@ -42,16 +39,16 @@ void led_init(void)
 void led_set(u32 led, bool tostate)
 {
     u32 status, mask, bit_flip_mask;
+    status = XGpio_DiscreteRead(&port, CHANNEL1); // get led status
     if (led == ALL) {
         // set all LEDs
         if (tostate) {
-            XGpio_DiscreteWrite(&port, CHANNEL1, 0xf);
+	    status = status | 0xf; 
         } else {
-            XGpio_DiscreteWrite(&port, CHANNEL1, 0x0);
+	    status = status & 0xfffffff0;
         }
+	XGpio_DiscreteWrite(&port, CHANNEL1, status);
     } else if (led <= 3) {
-        //get led status
-        status = XGpio_DiscreteRead(&port, CHANNEL1);
         // 1 for which led to turn on, everything else zero. ex:100 means turn led 2 on
         mask = 1 << led;
 
@@ -63,15 +60,6 @@ void led_set(u32 led, bool tostate)
             status &= mask;
         }
         XGpio_DiscreteWrite(&port, CHANNEL1, status);
-        // modify specific LEDs
-        //		u32 current = XGpio_DiscreteRead(&port, channel);
-        //		if (tostate) {
-        //			current &= 0xf;
-        //			XGpio_DiscreteWrite(&port, channel, current);
-        //		} else {
-        //			current ;
-        //			XGpio_DiscreteWrite(&port, channel, current);
-        //		}
     }
 }
 
@@ -83,7 +71,6 @@ void led_set(u32 led, bool tostate)
  * returns {LED_ON,LED_OFF,...}; LED_OFF if <led> is invalid
  */
 bool led_get(u32 led){
-
     u32 status, mask;
 
     if (led <= 3){
