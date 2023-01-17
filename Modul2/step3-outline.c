@@ -19,6 +19,10 @@
 #include "gic.h"		/* interrupt controller interface */
 #include "xgpio.h"		/* axi gpio interface */
 
+
+#define CHANNEL1 1							/* channel 1 of the GPIO port */
+
+
 /* hidden private state */
 static XGpio btnport;	       /* btn GPIO port instance */
 static int pushes=0;	       /* variable used to count interrupts */
@@ -43,10 +47,37 @@ int main() {
   init_platform();				
 
   /* initialize the gic (c.f. gic.h) */
+  gic_init();
+
   /* initialize btnport (c.f. module 1) and immediately dissable interrupts */
+  if(XGpio_Initialize(&btnport, XPAR_AXI_GPIO_1_DEVICE_ID)!=XST_SUCCESS) {
+    		printf("Unable to initialize btn GPIO(1)");
+    		return 0;
+    }
+  // disable golabl interrupt to the processor
+  XGpio_InterruptGlobalDisable(&btnport);
+
+  // diable channel interrups
+  /*
+   * Mask is the mask to disable. Bits set to 1 are disabled. This
+   * mask is formed by OR'ing bits from XGPIO_IR* bits which are
+   * contained in xgpio_l.h.
+   */
+  XGpio_InterruptDisable(&btnport, XGPIO_IR_CH1_MASK);
+
+  //set tri state buffer to input
+  XGpio_SetDataDirection(&btnport, CHANNEL1, INPUT);
+
   /* connect handler to the gic (c.f. gic.h) */
+  if( gic_connect(XPAR_FABRIC_GPIO_1_VEC_ID, btn_handler, &btnport) != XST_SUCCESS) {
+	  printf("Unable to connect btn int to gic");
+	  return 0;
+  }
   /* enable interrupts on channel (c.f. table 2.1) */
+  XGpio_InterruptEnable(&btnport, XGPIO_IR_CH1_MASK);
+
   /* enable interrupt to processor (c.f. table 2.1) */
+  XGpio_InterruptGlobalEnable(&btnport);
 
   printf("[hello]\n"); /* so we are know its alive */
   pushes=0;
@@ -56,7 +87,11 @@ int main() {
   printf("\n[done]\n");
 
   /* disconnect the interrupts (c.f. gic.h) */
-  /* close the gic (c.f. gic.h)
+  gic_disconnect(XPAR_FABRIC_GPIO_1_VEC_ID);
+
+  /* close the gic (c.f. gic.h) */
+  gic_close();
+
   cleanup_platform();					/* cleanup the hardware platform */
   return 0;
 }
