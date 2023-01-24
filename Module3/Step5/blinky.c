@@ -17,6 +17,7 @@
 #include "xgpio.h"		/* axi gpio interface */
 #include "led.h" // led interface
 #include "io.h" //
+#include "ttc.h"
 
 
 
@@ -31,12 +32,14 @@
 #define FREQ 1 // 1 hz = 1 sec
 #define LED4 4
 
+static bool led4_on = false;
+
 void read_save_echo_line(char line[]){
     char c;
     int i = 0; // where to save read char in line
     c = getchar();
 
-    // \r is carriage return which is what lines end with in this system
+    // \r is carriage return which is what lines end with in tahis system
     // https://developer.arm.com/documentation/ka003309/latest#:~:text=In%20most%20C%20compilers%2C%20including,return%20is%20'%5Cr'.
     while (c != '\r'){
         // save read char
@@ -56,11 +59,12 @@ void read_save_echo_line(char line[]){
 
 // toggle led 4
 static void ttc_callback(void){
-	if (led_get(LED4) == LED_ON){
-		led_set(4, LED_OFF);
+	if (led4_on){
+		led_set(LED4, LED_OFF);
 	}else{
-		led_set(4, LED_ON);
+		led_set(LED4, LED_ON);
 	}
+	led4_on = !led4_on;
 }
 
 void btn_callback(u32 btn) {
@@ -93,7 +97,7 @@ int main() {
 	ttc_start();
 
 	//set led 4 on to signify program is on
-	led_set(4, LED_ON);
+	//led_set(4, LED_ON);
 
 	printf("[hello]\n"); /* so we are know its alive */
 
@@ -140,7 +144,7 @@ int main() {
 	io_sw_close();
 	gic_close();
 	led_set(ALL, LED_OFF); // turn off led0
-	led_set(4, LED_OFF);
+	//led_set(4, LED_OFF);
 	cleanup_platform();					/* cleanup the hardware platform */
 	return 0;
 }
