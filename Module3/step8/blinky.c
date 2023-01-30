@@ -100,7 +100,7 @@ int main() {
 	ttc_init(FREQ, ttc_callback);
 	ttc_start();
 	// initialize the servo
-    servo_init(); // starts at initial servo dutycycle
+    	servo_init(); // starts at initial servo dutycycle
 
 	//set led 4 on to signify program is on
 	led_set(4, LED_ON);
@@ -111,40 +111,40 @@ int main() {
 	// listening for stdin
 	while(!done){
 
-			printf(">");
-			// write everything in stdout buffer in case
-			fflush(stdout);
+		printf(">");
+		// write everything in stdout buffer in case
+		fflush(stdout);
 
-			read_save_echo_line(line);
+		read_save_echo_line(line);
 
-			if (strcmp(line, "q") == 0){
-				done = true;
-            }else if (strcmp(line, "a") == 0){
-                // increment duty cycle
-                servo_dutycycle += 0.25;
-                servo_set(servo_dutycycle);
-                printf("[%f]", servo_dutycycle);
-            }else if (strcmp(line, "s") == 0){
-                // decrement duty cycle
-                servo_dutycycle -= 0.25;
-                servo_set(servo_dutycycle);
-                printf("[%f]", servo_dutycycle);
-			}else{
-				strtol_n = (int)strtol(line, &end_char, 10); // convert the content of line to base 10
-				/*
-		           detect a number between 0 and 3
-		               man strtol:
-		               If endptr is not NULL, strtol() stores the address of the first invalid
-		               character  in *endptr.  If there were no digits at all, strtol() stores
-		               the original value of nptr in *endptr (and returns 0).  In  particular,
-		               if  *nptr is not '\0' but **endptr is '\0' on return, the entire string
-		               is valid.
-				 */
-				if (*line != '\0' && *end_char == '\0'){ //or *end_char == '\0' && line != end_char && n >=0){
-					if (strtol_n >= 0 && strtol_n <= 3){
-						// Step 9: Toggle the expected LED & print
-						led_toggle((u32)strtol_n);
-					}
+		if (strcmp(line, "q") == 0){
+			done = true;
+            	}else if (strcmp(line, "a") == 0){
+                	// increment duty cycle
+                	servo_dutycycle += 0.25;
+                	servo_set(servo_dutycycle);
+                	printf("[%f]", servo_dutycycle);
+            	}else if (strcmp(line, "s") == 0){
+                	// decrement duty cycle
+                	servo_dutycycle -= 0.25;
+                	servo_set(servo_dutycycle);
+               		printf("[%f]", servo_dutycycle);
+		}else{
+			strtol_n = (int)strtol(line, &end_char, 10); // convert the content of line to base 10
+			/*
+		        detect a number between 0 and 3
+		        man strtol:
+		        If endptr is not NULL, strtol() stores the address of the first invalid
+		        character  in *endptr.  If there were no digits at all, strtol() stores
+		       	the original value of nptr in *endptr (and returns 0).  In  particular,
+		        if  *nptr is not '\0' but **endptr is '\0' on return, the entire string
+		        is valid.
+			*/
+			if (*line != '\0' && *end_char == '\0'){ //or *end_char == '\0' && line != end_char && n >=0){
+				if (strtol_n >= 0 && strtol_n <= 3){
+					// Step 9: Toggle the expected LED & print
+					led_toggle((u32)strtol_n);
+				}
 				}
 			}
 			printf("\n");
