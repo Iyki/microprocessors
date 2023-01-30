@@ -4,13 +4,6 @@
 
 #include "servo.h"
 
-// hardware 
-#define CLOCK_FREQ 50000000
-
-// timer 0 settings
-#define PERIOD 1000000 // 20ms period (Timer 0)
-#define PERIOD_MS 20 // 20ms period (Timer 0)
-
 XTmrCtr* psTmr;
 
 /*
