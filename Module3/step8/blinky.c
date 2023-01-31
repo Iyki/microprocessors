@@ -134,12 +134,12 @@ int main() {
                 servo_set(servo_dutycycle);
                 printf("[%f]", servo_dutycycle);
             }else if (strcmp(line, "low") == 0){
-                // decrement duty cycle
+                //lowest duty cycle
                 servo_dutycycle = MINPOINT;
                 servo_set(servo_dutycycle);
                 printf("[%f]", servo_dutycycle);
             }else if (strcmp(line, "high") == 0){
-                // decrement duty cycle
+                // highest duty cycle
                 servo_dutycycle = MAXPOINT;
                 servo_set(servo_dutycycle);
                 printf("[%f]", servo_dutycycle);
