@@ -28,11 +28,7 @@ void servo_init(void) {
 
     servo_set(MIDPOINT);
 
-
-    // TODO
-    // start both timers
-    XTmrCtr_Start(psTmr, 0);
-	XTmrCtr_Start(psTmr, 1);
+    
 }
 
 /*
@@ -61,4 +57,9 @@ void servo_set(double dutycycle) {
     // set reset value for both timers
     XTmrCtr_SetResetValue(psTmr, 0, PERIOD);
     XTmrCtr_SetResetValue(psTmr, 1, HighTime);
+	
+	// start both timers
+    XTmrCtr_Start(psTmr, 0);
+	XTmrCtr_Start(psTmr, 1);
+
 }
