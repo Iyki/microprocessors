@@ -31,6 +31,8 @@ static void Uart1_Handler( void *CallBackRef, u32 Event, unsigned int EventData)
 
 		XUartPs_Recv(uart1_ptr, &recieve_buffer_ptr, 1);
 		if(recieve_buffer_ptr == (u8)'\r') {
+			// still send it normaly but for display purposes, we also need to send a new line
+			XUartPs_Send(uart1_ptr, &recieve_buffer_ptr, 1);
 			recieve_buffer_ptr = (u8)'\n';
 			XUartPs_Send(uart1_ptr, &recieve_buffer_ptr, 1);
 		} else if (recieve_buffer_ptr == (u8)'3'){
