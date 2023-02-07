@@ -86,17 +86,19 @@ int main(void) {
 
 
 
-	/* do some initialization here */
 	printf("[hello]\n");
 	done = false;
 	while(!done) /* do nothing waiting for interrupts */
 
-
-		sleep(1); /* included from <unistd.h> */
+	/* do some cleanup here */
 	printf("[done]\n");
+	sleep(1); /* included from <unistd.h> */
+	
+	XUartPs_DisableUart(&uart_ps_1);
 	gic_disconnect(XPAR_XUARTPS_1_INTR);
+	
 	gic_close();
 	cleanup_platform();
-	sleep(1);
-	/* do some cleanup here */
+
+	
 }
