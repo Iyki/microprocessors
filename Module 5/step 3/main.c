@@ -124,12 +124,16 @@ int main(void) {
 	done = false;
 	while(!done) /* do nothing waiting for interrupts */
 
-
-		sleep(1); /* included from <unistd.h> */
 	printf("[done]\n");
+	sleep(1); /* included from <unistd.h> */
+
+	/* do some cleanup here */
+	XUartPs_DisableUart(&uart_ps_0);
+	gic_disconnect(XPAR_XUARTPS_0_INTR);
+
+	XUartPs_DisableUart(&uart_ps_1);
 	gic_disconnect(XPAR_XUARTPS_1_INTR);
 	gic_close();
 	cleanup_platform();
-	sleep(1);
-	/* do some cleanup here */
+
 }
