@@ -25,14 +25,14 @@ static bool done; // end of program
 static void Uart1_Handler( void *CallBackRef, u32 Event, unsigned int EventData) {
 
 	XUartPs *uart1_ptr = (XUartPs *) CallBackRef;
-	u8 *recieve_buffer_ptr;
+	u8 recieve_buffer_ptr;
 
 	if (Event == XUARTPS_EVENT_RECV_DATA) {
 
 		XUartPs_Recv(uart1_ptr, &recieve_buffer_ptr, 1);
 		if(recieve_buffer_ptr == (u8)'\r') {
 			recieve_buffer_ptr = (u8)'\n';
-			XUartPs_Send(UartInstPtr, &recieve_buffer_ptr, 1);
+			XUartPs_Send(uart1_ptr, &recieve_buffer_ptr, 1);
 		} else if (recieve_buffer_ptr == (u8)'3'){
 			done = true;
 		}else{
