@@ -52,9 +52,7 @@ static void Uart1_Handler( void *CallBackRef, u32 Event, unsigned int EventData)
 
 			recieve_buffer_ptr = (u8)'\n';
 			XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1);
-		} else if (recieve_buffer_ptr == (u8)'3'){
-			done = true;
-		}else{
+		} else{
 			XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1); // send to screen
 			XUartPs_Send(&uart_ps_0, &recieve_buffer_ptr, 1); //send uart 0
 		}
@@ -62,6 +60,9 @@ static void Uart1_Handler( void *CallBackRef, u32 Event, unsigned int EventData)
 }
 
 static void btn_callback(u32 btn) {
+	if (btn == 2) {
+		done = true;
+	}
 	led_toggle(btn);
 	//pushes++;
 }
