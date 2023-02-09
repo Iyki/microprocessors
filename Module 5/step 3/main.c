@@ -1,4 +1,3 @@
-
 #include <stdio.h>		/* getchar,printf */
 #include <stdlib.h>		/* strtod */
 #include <stdbool.h>		/* type bool */
@@ -47,13 +46,13 @@ static void Uart1_Handler( void *CallBackRef, u32 Event, unsigned int EventData)
 		XUartPs_Recv(uart_ptr, &recieve_buffer_ptr, 1);
 		if(recieve_buffer_ptr == (u8)'\r') {
 			// we still need to send it as it but also on screen print a new line
-			XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1); // send to screen
+			//XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1); // send to screen
 			XUartPs_Send(&uart_ps_0, &recieve_buffer_ptr, 1); //send uart 0
 
 			recieve_buffer_ptr = (u8)'\n';
 			XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1);
 		} else{
-			XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1); // send to screen
+			//XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1); // send to screen
 			XUartPs_Send(&uart_ps_0, &recieve_buffer_ptr, 1); //send uart 0
 		}
 	}
@@ -123,7 +122,7 @@ int main(void) {
 	/* do some initialization here */
 	printf("[hello]\n");
 	done = false;
-	while(!done) /* do nothing waiting for interrupts */
+	while(!done); /* do nothing waiting for interrupts */
 
 	printf("[done]\n");
 	sleep(1); /* included from <unistd.h> */
