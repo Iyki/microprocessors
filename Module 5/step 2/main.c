@@ -13,6 +13,7 @@
 #include "xgpio.h"		/* axi gpio interface */
 #include "led.h" 		// led interface
 #include "io.h" //
+#include "xuartps.h"
 
 
 
@@ -32,18 +33,19 @@ static void Uart1_Handler( void *CallBackRef, u32 Event, unsigned int EventData)
 		XUartPs_Recv(uart1_ptr, &recieve_buffer_ptr, 1);
 		if(recieve_buffer_ptr == (u8)'\r') {
 			// still send it normaly but for display purposes, we also need to send a new line
-			XUartPs_Send(uart1_ptr, &recieve_buffer_ptr, 1);
+			XUartPs_Send(&uart_ps_1, &recieve_buffer_ptr, 1);
 			recieve_buffer_ptr = (u8)'\n';
-			XUartPs_Send(uart1_ptr, &recieve_buffer_ptr, 1);
-		} else if (recieve_buffer_ptr == (u8)'3'){
-			done = true;
-		}else{
-			XUartPs_Send(uart1_ptr, &recieve_buffer_ptr, 1);
+			XUartPs_Send(&uart_ps_1, &recieve_buffer_ptr, 1);
+		} else{
+			XUartPs_Send(&uart_ps_1, &recieve_buffer_ptr, 1);
 		}
 	}
 }
 
 static void btn_callback(u32 btn) {
+	if (btn == 2) {
+		done = true;
+	}
 	led_toggle(btn);
 	//pushes++;
 }
@@ -82,23 +84,20 @@ int main(void) {
 	// connect to interrupt controller
 	gic_connect(XPAR_XUARTPS_1_INTR, (Xil_ExceptionHandler)XUartPs_InterruptHandler, (void *) &uart_ps_1);
 
-
-
-
-
 	printf("[hello]\n");
+	fflush(stdout);
 	done = false;
-	while(!done) /* do nothing waiting for interrupts */
+	while(!done); /* do nothing waiting for interrupts */
 
 	/* do some cleanup here */
 	printf("[done]\n");
 	sleep(1); /* included from <unistd.h> */
-	
+
 	XUartPs_DisableUart(&uart_ps_1);
 	gic_disconnect(XPAR_XUARTPS_1_INTR);
-	
+
 	gic_close();
 	cleanup_platform();
 
-	
+
 }
