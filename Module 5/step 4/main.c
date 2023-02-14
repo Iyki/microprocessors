@@ -1,4 +1,3 @@
-
 #include <stdio.h>		/* getchar,printf */
 #include <stdlib.h>		/* strtod */
 #include <stdbool.h>		/* type bool */
@@ -9,7 +8,6 @@
 #include "xil_types.h"		/* u32, s32 etc */
 #include "xparameters.h"	/* constants used by hardware */
 #include "xuartps.h"
-
 
 #include "gic.h"		/* interrupt controller interface */
 #include "xgpio.h"		/* axi gpio interface */
@@ -24,7 +22,7 @@ static XUartPs uart_ps_0;
 static bool done; // end of program
 
 
-// recieve from wifi and forward anything recieved to uart 1
+// forward anything recieved to uart 1
 static void Uart0_Handler( void *CallBackRef, u32 Event, unsigned int EventData) {
 
 	XUartPs *uart_ptr = (XUartPs *) CallBackRef;
@@ -38,10 +36,6 @@ static void Uart0_Handler( void *CallBackRef, u32 Event, unsigned int EventData)
 }
 
 
-
-/*
- * Recive from keyboard or wifi and send to wifi
- */
 static void Uart1_Handler( void *CallBackRef, u32 Event, unsigned int EventData) {
 
 	XUartPs *uart_ptr = (XUartPs *) CallBackRef;
@@ -52,21 +46,22 @@ static void Uart1_Handler( void *CallBackRef, u32 Event, unsigned int EventData)
 		XUartPs_Recv(uart_ptr, &recieve_buffer_ptr, 1);
 		if(recieve_buffer_ptr == (u8)'\r') {
 			// we still need to send it as it but also on screen print a new line
-			XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1); // send to screen
+			//XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1); // send to screen
 			XUartPs_Send(&uart_ps_0, &recieve_buffer_ptr, 1); //send uart 0
 
 			recieve_buffer_ptr = (u8)'\n';
 			XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1);
-		} else if (recieve_buffer_ptr == (u8)'3'){
-			done = true;
-		}else{
-			XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1); // send to screen
+		} else{
+			//XUartPs_Send(uart_ptr, &recieve_buffer_ptr, 1); // send to screen
 			XUartPs_Send(&uart_ps_0, &recieve_buffer_ptr, 1); //send uart 0
 		}
 	}
 }
 
 static void btn_callback(u32 btn) {
+	if (btn == 2) {
+		done = true;
+	}
 	led_toggle(btn);
 	//pushes++;
 }
@@ -129,7 +124,7 @@ int main(void) {
 	/* do some initialization here */
 	printf("[hello]\n");
 	done = false;
-	while(!done) /* do nothing waiting for interrupts */
+	while(!done); /* do nothing waiting for interrupts */
 
 	printf("[done]\n");
 	sleep(1); /* included from <unistd.h> */
@@ -140,8 +135,6 @@ int main(void) {
 
 	XUartPs_DisableUart(&uart_ps_1);
 	gic_disconnect(XPAR_XUARTPS_1_INTR);
-
-	io_btn_close();
 	gic_close();
 	cleanup_platform();
 
