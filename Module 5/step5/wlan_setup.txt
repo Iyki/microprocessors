@@ -1,0 +1,20 @@
+factory RESET
+
+set wlan join 1
+
+set wlan auth 4
+
+set wlan SSID "ENGS62" # "What$Do$You$Get$When$You$Multiply$6$by$9$?"
+
+set wlan phrase "Engs62connect" # "fortytwo,duh"
+
+set ip dhcp 1
+
+set ip host 129.170.66.33
+
+set ip remote 8880
+
+# setting up IP protocol to UDP
+set ip proto 1
+
+save
