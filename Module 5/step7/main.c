@@ -25,11 +25,24 @@ static bool done; // end of program
 
 static int mode = CONFIGURE;// default mode
 
-// typedefs 
+// typedefs
 typedef struct {
-    int type; 
+    int type;
     int id;
 } ping_t;
+
+typedef struct {
+	int type;
+	int id;
+	int value;
+} update_request_t;
+
+typedef struct {
+	int type;
+	int id;
+	int average;
+	int values[30];
+} update_response_t;
 
 // forward anything recieved to uart 1
 static void Uart0_Handler( void *CallBackRef, u32 Event, unsigned int EventData) {
