@@ -2,9 +2,9 @@ factory RESET
 
 set wlan join 1
 
-set wlan auth 4
+set wlan auth 2 # does not match auth in manual, which should be 4
 
-set wlan SSID "ENGS62" # "What$Do$You$Get$When$You$Multiply$6$by$9$?"
+set wlan ssid "ENGS62" # "What$Do$You$Get$When$You$Multiply$6$by$9$?"
 
 set wlan phrase "Engs62connect" # "fortytwo,duh"
 
