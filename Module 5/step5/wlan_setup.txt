@@ -4,17 +4,17 @@ set wlan join 1
 
 set wlan auth 2 # does not match auth in manual, which should be 4
 
-set wlan ssid "ENGS62" # "What$Do$You$Get$When$You$Multiply$6$by$9$?"
+set wlan ssid ENGS62 # What$Do$You$Get$When$You$Multiply$6$by$9$?
 
-set wlan phrase "Engs62connect" # "fortytwo,duh"
+set wlan phrase Engs62connect # fortytwo,duh
 
 set ip dhcp 1
 
 set ip host 129.170.66.33
 
-set ip remote 8880
+set ip remote 8880 # set ip remote 8888
 
 # setting up IP protocol to UDP
-set ip proto 1
+set ip proto 1 # set ip protocol 1
 
 save
